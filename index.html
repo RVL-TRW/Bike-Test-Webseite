@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account erstellen</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1e3a28;
+            --accent: #2a5a3f;
+            --light: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #1e3a28 0%, #13251b 100%);
+            font-family: 'Lato', system-ui, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Container (wie App Look) */
+        .app {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.6);
+        }
+
+        /* Logo oben */
+        .logo {
+            position: absolute;
+            top: 40px;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        /* Button im selben Style */
+        .gen-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.95);
+            background: rgba(30, 58, 40, 0.95);
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 18px 36px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .gen-btn:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <div class="logo">PRESTARBIKE</div>
+
+    <button class="gen-btn" onclick="window.location.href='Hauptseite.html'">
+        Generiere einen Account
+    </button>
+</div>
+
+</body>
+</html>

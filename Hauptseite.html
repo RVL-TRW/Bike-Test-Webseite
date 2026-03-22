@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prestarbike – Die smarte Fahrrad-App für Profis. Tracke deine Touren in Echtzeit.">
+    <title>Prestarbike</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&amp;family=Roboto:wght@500;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1e3a28;
+            --accent: #2a5a3f;
+            --light: #ffffff;
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: var(--light);
+            font-family: 'Lato', system-ui, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .app {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, #1e3a28 0%, #13251b 100%);
+            overflow: hidden;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.6);
+        }
+        
+        /* === LOGO & HEADER === */
+        .app-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            backdrop-filter: blur(12px);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: white;
+        }
+        
+        /* === BUTTONS === */
+        .norm-btn {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid rgba(255,255,255,0.95);
+            background: rgba(30, 58, 40, 0.95);
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            z-index: 30;
+        }
+        .norm-btn:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+        }
+        #fehler-btn { top: 90px; left: 30px; }
+        #login-btn  { top: 90px; right: 30px; }
+        
+        /* === SPEED DISPLAY === */
+        .speed-wrapper {
+            position: absolute;
+            left: 50%;
+            top: 48%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .Speed-txt {
+            font-size: 118px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -8px;
+            margin: 0;
+            color: white;
+        }
+        .speed-unit {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.85);
+            margin-top: -18px;
+        }
+        
+        /* === TIME DISPLAY === */
+        .time-wrapper {
+            position: absolute;
+            left: 50%;
+            bottom: 110px;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+        .time-label {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 4px;
+        }
+        .Time-txt {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: white;
+            margin: 0;
+        }
+        
+        /* ====================== MODALS ====================== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .modal-content {
+    position: relative; /* DAS FIXT ES */
+    background: var(--primary);
+    width: 92%;
+    max-width: 380px;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.65);
+    border: 1px solid rgba(255,255,255,0.15);
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+        @keyframes slideUp {
+            from { transform: translateY(80px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 32px;
+            color: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close:hover { color: white; }
+        
+        .modal h2 {
+            margin: 0 0 24px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .modal label {
+            display: block;
+            margin: 20px 0 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .modal input, .modal select, .modal textarea {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: #2a5a3f;
+            color: white;
+            font-size: 17px;
+            transition: border 0.3s;
+        }
+        .modal input:focus, .modal select:focus, .modal textarea:focus {
+            border-color: #4ade80;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+        }
+        
+        .modal button {
+            width: 100%;
+            margin-top: 30px;
+            padding: 17px;
+            background: #4ade80;
+            color: #1e3a28;
+            font-weight: 700;
+            font-size: 18px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .modal button:hover {
+            background: #3cc66a;
+            transform: translateY(-2px);
+        }
+        
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e3a28;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 300;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <!-- Header mit Logo -->
+    <div class="app-header">
+        <div class="logo">
+            PRESTARBIKE
+        </div>
+    </div>
+
+    <button id="fehler-btn" class="norm-btn">
+        Fehler melden
+    </button>
+    <button id="login-btn" class="norm-btn">
+        <i class="fa-solid fa-circle-user"></i>
+        Login
+    </button>
+
+    <!-- Geschwindigkeit -->
+    <div class="speed-wrapper">
+        <h1 class="Speed-txt">20</h1>
+        <div class="speed-unit">km/h</div>
+    </div>
+
+    <!-- Fahrtzeit -->
+    <div class="time-wrapper">
+        <div class="time-label">Fahrtzeit</div>
+        <h1 id="time-display" class="Time-txt">00:00</h1>
+    </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="login-modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('login-modal')">×</span>
+        <h2><i class="fa-solid fa-circle-user"></i> Anmelden</h2>
+        
+        <label for="username">E-Mail oder Benutzername</label>
+        <input type="text" id="username" placeholder="name@beispiel.de">
+        
+        <label for="password">Passwort</label>
+        <input type="password" id="password" placeholder="••••••••">
+        
+        <button onclick="fakeLogin()">Jetzt anmelden</button>
+    </div>
+</div>
+
+<!-- FEHLER MELDEN MODAL -->
+<div id="fehler-modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('fehler-modal')">×</span>
+        <h2>Fehler melden</h2>
+        
+        <label for="category">Was ist das Problem?</label>
+        <select id="category">
+            <option value="">Bitte auswählen...</option>
+            <option value="Bezahlung">Bezahlung fehlgeschlagen</option>
+            <option value="Geschwindigkeit">Falsche Geschwindigkeit</option>
+            <option value="Technik">Technischer Fehler</option>
+            <option value="Radar">Radar-Anzeige falsch</option>
+            <option value="Sonstiges">Sonstiges</option>
+        </select>
+        
+        <label for="description">Genauere Beschreibung</label>
+        <textarea id="description" placeholder="Bitte beschreibe das Problem möglichst genau..."></textarea>
+        
+        <button onclick="submitFehler()">Abschicken</button>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">
+    <i class="fa-solid fa-check-circle" style="color:#4ade80;"></i>
+    <span id="toast-text"></span>
+</div>
+
+<script>
+    // Timer
+    let totalSeconds = 0;
+    const timeDisplay = document.getElementById('time-display');
+    setInterval(() => {
+        totalSeconds++;
+        const min = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+        const sec = (totalSeconds % 60).toString().padStart(2, '0');
+        timeDisplay.textContent = `${min}:${sec}`;
+    }, 1000);
+
+    // Modal Funktionen
+    function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    // Event Listener
+    document.getElementById('login-btn').addEventListener('click', () => openModal('login-modal'));
+    document.getElementById('fehler-btn').addEventListener('click', () => openModal('fehler-modal'));
+
+    // Toast Funktion
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-text').textContent = message;
+        toast.style.display = 'flex';
+        setTimeout(() => { toast.style.display = 'none'; }, 2800);
+    }
+
+    // Login
+    function fakeLogin() {
+        const user = document.getElementById('username').value.trim();
+        if (user) {
+            showToast(`Erfolgreich angemeldet als ${user}`);
+            closeModal('login-modal');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        } else {
+            alert('Bitte E-Mail oder Benutzernamen eingeben.');
+        }
+    }
+
+    // Fehler melden
+    function submitFehler() {
+        const category = document.getElementById('category').value;
+        const desc = document.getElementById('description').value.trim();
+        
+        if (!category) { alert('Bitte wähle eine Kategorie aus.'); return; }
+        if (!desc) { alert('Bitte gib eine Beschreibung ein.'); return; }
+        
+        showToast('Fehler erfolgreich gemeldet – danke!');
+        closeModal('fehler-modal');
+        document.getElementById('category').value = '';
+        document.getElementById('description').value = '';
+    }
+
+    // ESC + Outside Click
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    });
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', e => {
+            if (e.target === modal) closeModal(modal.id);
+        });
+    });
+</script>
+</body>
+</html>

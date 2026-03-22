@@ -1,0 +1,46 @@
+body{
+background-color: #325d3e;
+color: white;
+}
+
+.gen-btn{
+    background-color: #2b4336;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    height: 4em;
+    position: absolute;
+    left: 46%;
+    top: 50%;
+    transition: .5s;
+}
+
+.gen-btn:hover{
+    background-color: white;
+    color: #2b4336;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.norm-btn{
+border: 1px solid white;
+border-radius: 2px;
+background-color: #2b4336;
+color: white;
+}
+
+.Speed-txt{
+    font-size: 64px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    align-self: center;
+}
+
+.Time-txt{
+    font-size: 24px;
+    position: absolute;
+    left: 50%;
+    top: 90%;
+}
